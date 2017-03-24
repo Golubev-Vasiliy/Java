@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JFrame extends javax.swing.JFrame{
+public class JFrame extends javax.swing.JFrame {
 
     public JFrame() {
         initComponents();
@@ -158,34 +158,26 @@ public class JFrame extends javax.swing.JFrame{
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.showOpenDialog(chooser);
+        filename = chooser.getSelectedFile().getName();
+        file = chooser.getSelectedFile();
         try {
-            filename = chooser.getSelectedFile().getName();
-            fileFormat();
-            file = chooser.getSelectedFile();
             fileReader();
-            pathField.setText(filename);
-            labelForText.setVisible(true);
-            jScrollPane1.setVisible(true);  
-        } catch (fileFormatException ex) {
-            pathField.setText("Выберете txt файл");
         } catch (IOException ex) {
             Logger.getLogger(JFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        pathField.setText(filename);
+        labelForText.setVisible(true);
+        jScrollPane1.setVisible(true);
     }//GEN-LAST:event_chooseFileMouseClicked
 
     private void lenghtTextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lenghtTextMouseClicked
         fileReader = textField.getText();
-        if (fileReader.length()>0)
-            labelLenght.setText(Integer.toString(fileReader.length()));
+        labelLenght.setText(Integer.toString(fileReader.length()));
     }//GEN-LAST:event_lenghtTextMouseClicked
 
     private void symbol3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_symbol3MouseClicked
-        try{
         fileReader = textField.getText();
         labelSym3.setText(fileReader.substring(0, 3));
-        } catch (Exception ex){
-            System.out.println("Невозможно выделить первые 3 символа");
-        }
     }//GEN-LAST:event_symbol3MouseClicked
 
     private void changeB_AMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_changeB_AMouseClicked
@@ -211,19 +203,12 @@ public class JFrame extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
     private String filename;
     private File file;
-    private String fileReader;
+    String fileReader;
             
-    private void fileReader() throws IOException {
+    public void fileReader() throws IOException {
+        
         Scanner text = new Scanner(file, "UTF-8");
         String s = text.nextLine();
         textField.setText(s);
     } 
-    
-    private void fileFormat() throws fileFormatException {
-        String[] S = filename.split("\\.");
-        if (S[1].equals("txt") == false)
-            throw new fileFormatException();
-        
-    }
 }
-
